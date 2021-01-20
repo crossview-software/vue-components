@@ -92,7 +92,8 @@ describe("CHero overlay", () => {
 	it("renders the overlay", () => {
 		const wrapper = shallowMount(CHero, {
 			props: {
-				overlayTag: "article"
+				overlayTag: "article",
+				overlay: true
 			}
 		})
 		expect(wrapper.find("article.c-hero__overlay")
@@ -101,13 +102,17 @@ describe("CHero overlay", () => {
 	})
 
 	it("renders div if no overlay tag passed", () => {
-		const wrapper = shallowMount(CHero)
+		const wrapper = shallowMount(CHero, {
+			props: {
+				overlay: true
+			}
+		})
 		expect(wrapper.find("div.c-hero__overlay")
 		              .exists())
 			.toBeTruthy()
 	})
 
-	it("doesn't render the overlay if overlay prop is false", () => {
+	it("doesn't render the overlay by default", () => {
 		const wrapper = shallowMount(CHero, {
 			props: {
 				overlay: false
@@ -121,7 +126,8 @@ describe("CHero overlay", () => {
 	it("renders classes on the hero overlay", () => {
 		const wrapper = shallowMount(CHero, {
 			props: {
-				overlayClass: "test-class"
+				overlayClass: "test-class",
+				overlay: true
 			}
 		})
 		expect(wrapper.find(".test-class")

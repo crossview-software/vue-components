@@ -33,7 +33,7 @@ export default {
 		},
 		overlay: {
 			type: Boolean,
-			default: true
+			default: false
 		},
 		heroClass: {
 			type: [String, Object],
