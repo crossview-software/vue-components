@@ -4,30 +4,32 @@ import TestComponent from "@/components/TestComponent"
 import {h} from "vue"
 
 describe("CHero.vue", () => {
-	it("renders the specified wrapper when passed", () => {
-		const el      = "div"
-		const wrapper = shallowMount(CHero, {
-			props: {
-				tag: el
-			}
-		})
-		expect(wrapper.element.tagName.toLowerCase())
-			.toMatch(el)
-	})
-
-	it("renders section if no wrapper specified", () => {
-		const wrapper = shallowMount(CHero)
-		expect(wrapper.element.tagName.toLowerCase())
-			.toMatch("section")
-	})
-
 	it("renders slot", () => {
-		const wrapper = shallowMount(CHero, {
+		// This passes as expected
+		const wrapper1 = shallowMount(CHero, {
 			slots: {
 				default: h("div", "Slot content")
 			}
 		})
-		expect(wrapper.html())
+		expect(wrapper1.html())
 			.toContain("Slot content")
+
+		// This passes as expected
+		const wrapper2 = shallowMount(CHero, {
+			slots: {
+				default: TestComponent
+			}
+		})
+		expect(wrapper2.html())
+			.toContain("Testing, testing")
+
+		// This fails unexpectedly, line 29 causes test to throw TypeError
+		const wrapper3 = shallowMount(CHero, {
+			slots: {
+				default: "<p>Some test paragraph</p>"
+			}
+		})
+		expect(wrapper3.html())
+			.toContain("Some test paragraph")
 	})
 })
